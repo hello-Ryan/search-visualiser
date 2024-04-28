@@ -15,20 +15,21 @@ screen = pygame.display.set_mode((WIDTH, HEIGHT))
 
 background = pygame.Surface((WIDTH, HEIGHT))
 background.fill(pygame.Color('#808080'))
+map = Map(WIDTH, HEIGHT)
 
 search_dropdown = UIDropDownMenu(options_list=['DFS','BFS','A*'],
                                        starting_option='DFS',
                                        relative_rect=pygame.Rect((WIDTH//16, 50), (WIDTH//8, 50)),
                                        manager=manager)
 
-clear_walls = UIButton(manager = manager, relative_rect=pygame.Rect((WIDTH//16, 200), (WIDTH//8, 50)), text="clear")
+clear_walls = UIButton(manager = manager, relative_rect=pygame.Rect((WIDTH//16, 200), (WIDTH//8, 50)), text="clear", command=map.clearWalls)
 
-map = Map(WIDTH, HEIGHT)
 
 run = True
 while run:
     time_delta = clock.tick(60)/1000.0
     mouse = pygame.mouse.get_pos()
+    mouse_x, mouse_y = mouse
     screen.fill("grey")
 
     # Render pygame gui buttons etc.
@@ -43,8 +44,9 @@ while run:
         if event.type == UI_DROP_DOWN_MENU_CHANGED:
           print("Selected option:", event.text)
         
-        if event.type == pygame.MOUSEBUTTONDOWN:
-            map.addWall(screen, mouse)
+        if (WIDTH//4 + 20 < mouse_x < WIDTH -20) and (event.type == pygame.MOUSEBUTTONDOWN or pygame.mouse.get_pressed()[0]):
+            map.addWall(mouse)
+        
 
 
         manager.process_events(event)

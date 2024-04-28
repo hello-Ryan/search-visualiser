@@ -19,10 +19,13 @@ class Map:
 
         
 
-    def addWall(self, screen, mouse):
+    def addWall(self, mouse):
         mouse_x, mouse_y = mouse
         if (self.width//4 + 20 < mouse_x < self.width - 20) and (20 < mouse_y < self.height - 20):
             x = (mouse_x - (self.width//4)) // 20
             y = (mouse_y) // 20
 
             self.walls.append((x,y))
+
+    def clearWalls(self):
+        self.walls = []
