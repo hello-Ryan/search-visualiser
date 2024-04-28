@@ -60,7 +60,11 @@ while run:
     mouse_x, mouse_y = pygame.mouse.get_pos()
 
     if (WIDTH//4 + 20 < mouse_x < WIDTH - 20) and (20 < mouse_y < HEIGHT - 20):
-        print("in")
+        x = (mouse_x - (WIDTH//4)) // 20
+        y = (mouse_y) // 20
+
+        pygame.draw.rect(screen, (0,0,0), pygame.Rect(((WIDTH//4 + 20*x), 20*y), (20, 20)))
+        print(x,y)
     else:
         print("out")
 
