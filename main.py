@@ -15,14 +15,22 @@ screen = pygame.display.set_mode((WIDTH, HEIGHT))
 
 background = pygame.Surface((WIDTH, HEIGHT))
 background.fill(pygame.Color('#808080'))
-map = Map(WIDTH, HEIGHT)
+map = Map(screen, WIDTH, HEIGHT)
 
 search_dropdown = UIDropDownMenu(options_list=['DFS','BFS','A*'],
                                        starting_option='DFS',
                                        relative_rect=pygame.Rect((WIDTH//16, 50), (WIDTH//8, 50)),
                                        manager=manager)
 
-clear_walls = UIButton(manager = manager, relative_rect=pygame.Rect((WIDTH//16, 200), (WIDTH//8, 50)), text="clear", command=map.clearWalls)
+
+clear_walls = UIButton(manager = manager, 
+                       relative_rect=pygame.Rect((WIDTH//16, 200), (WIDTH//8, 50)), 
+                       text="clear", 
+                       command=map.clearWalls)
+
+generate_random_walls = UIButton(manager = manager,
+                                 relative_rect=pygame.Rect((WIDTH//16, 400), (WIDTH//8, 50)), 
+                                 text="Generate Random Walls")
 
 
 run = True
@@ -42,12 +50,10 @@ while run:
             run = False
 
         if event.type == UI_DROP_DOWN_MENU_CHANGED:
-          print("Selected option:", event.text)
+            map.updateSearchAlgorithm(search_dropdown.selected_option[0])
         
         if (WIDTH//4 + 20 < mouse_x < WIDTH -20) and (event.type == pygame.MOUSEBUTTONDOWN or pygame.mouse.get_pressed()[0]):
             map.addWall(mouse)
-        
-
 
         manager.process_events(event)
 
@@ -57,7 +63,7 @@ while run:
 
     pygame.draw.rect(screen, (0,0,0), pygame.Rect(WIDTH//4 + 20, 20, WIDTH - WIDTH//4 - 40, HEIGHT - 40), 1)
 
-    map.drawMap(screen, mouse)
+    map.drawMap()
 
 
 
