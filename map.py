@@ -17,7 +17,8 @@ class Map:
         self.start = (2, 2)
         self.goal = (30, 30)
         self.search = "DFS"
-        self.mapWidth = (width - 20 - width//4 - 20) // 20
+
+        self.mapWidth = (3*width//4 - 40) // 20
         self.mapHeight = (height - 40) // 20
 
     
@@ -39,12 +40,16 @@ class Map:
 
     def addWall(self, mouse):
         mouse_x, mouse_y = mouse
-        if (self.width//4 + 20 < mouse_x < self.width - 20) and (20 < mouse_y < self.height - 20):
-            x = (mouse_x - (self.width//4)) // 20
-            y = (mouse_y) // 20
+        x = (mouse_x - (self.width//4)) // 20
+        y = (mouse_y) // 20
 
-            self.walls.append((x,y))
-            
+        if (x,y) == self.start or (x,y) == self.goal:
+            return
+
+        if (self.width//4 + 20 < mouse_x < self.width - 20) and (20 < mouse_y < self.height - 20):
+            if (x,y) not in self.walls:
+                self.walls.append((x,y))
+            else: return
 
     def getNeighbours(self, node):
         x, y = node
@@ -53,6 +58,7 @@ class Map:
 
 
     def clearWalls(self):
+        print(f"{len(self.walls)} cleared")
         self.walls = []
 
 
@@ -99,9 +105,6 @@ class Map:
             
 
             
-
-
-        
 
 m = Map(None, 400, 400)
 
