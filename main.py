@@ -4,6 +4,7 @@ from pygame_gui.elements import UIDropDownMenu, UIButton
 from map import Map
 
 HEIGHT, WIDTH = 900, 1600
+BUTTON_WIDTH, BUTTON_HEIGHT = WIDTH//8, 50
 
 pygame.init()
 pygame.display.set_caption('Search Algorithms Visualiser')
@@ -19,17 +20,17 @@ map = Map(screen, WIDTH, HEIGHT)
 
 search_dropdown = UIDropDownMenu(options_list=['DFS','BFS','A*'],
                                        starting_option='DFS',
-                                       relative_rect=pygame.Rect((WIDTH//16, 50), (WIDTH//8, 50)),
+                                       relative_rect=pygame.Rect((WIDTH//16, 50), (BUTTON_WIDTH, BUTTON_HEIGHT)),
                                        manager=manager)
 
 
 clear_walls = UIButton(manager = manager, 
-                       relative_rect=pygame.Rect((WIDTH//16, 200), (WIDTH//8, 50)), 
+                       relative_rect=pygame.Rect((WIDTH//16, 200), (BUTTON_WIDTH, BUTTON_HEIGHT)), 
                        text="clear", 
                        command=map.clearWalls)
 
 generate_random_walls = UIButton(manager = manager,
-                                 relative_rect=pygame.Rect((WIDTH//16, 400), (WIDTH//8, 50)), 
+                                 relative_rect=pygame.Rect((WIDTH//16, 400), (BUTTON_WIDTH, BUTTON_HEIGHT)), 
                                  text="Generate Random Walls")
 
 
