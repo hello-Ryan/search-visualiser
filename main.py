@@ -5,6 +5,7 @@ from map import Map
 
 HEIGHT, WIDTH = 900, 1600
 BUTTON_WIDTH, BUTTON_HEIGHT = WIDTH//8, 50
+WINDOW_DIVIDER_WIDTH = WIDTH//4
 
 pygame.init()
 pygame.display.set_caption('Search Algorithms Visualiser')
@@ -53,20 +54,21 @@ while run:
         if event.type == UI_DROP_DOWN_MENU_CHANGED:
             map.updateSearchAlgorithm(search_dropdown.selected_option[0])
         
-        if (WIDTH//4 + 20 < mouse_x < WIDTH -20) and (event.type == pygame.MOUSEBUTTONDOWN or pygame.mouse.get_pressed()[0]):
+        if (WINDOW_DIVIDER_WIDTH + 20 < mouse_x < WIDTH -20) and\
+        (event.type == pygame.MOUSEBUTTONDOWN or pygame.mouse.get_pressed()[0]):
             map.addWall(mouse)
 
         manager.process_events(event)
 
-
     # Render native pygame modules
-    pygame.draw.line(screen, (0,0,0), (WIDTH//4, 0), (WIDTH//4, HEIGHT), 1)
+    pygame.draw.line(screen, (0,0,0), 
+                     (WINDOW_DIVIDER_WIDTH, 0), 
+                     (WINDOW_DIVIDER_WIDTH, HEIGHT), 1)
 
-    pygame.draw.rect(screen, (0,0,0), pygame.Rect(WIDTH//4 + 20, 20, WIDTH - WIDTH//4 - 40, HEIGHT - 40), 1)
+    pygame.draw.rect(screen, (0,0,0), 
+                     pygame.Rect(WINDOW_DIVIDER_WIDTH+ 20, 20, WIDTH - WINDOW_DIVIDER_WIDTH - 40, HEIGHT - 40), 1)
 
     map.drawMap()
-
-
 
     pygame.display.update()
 
